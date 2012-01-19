@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Kompassi_CheckoutFinland>
+			<active>true</active>
+			<codePool>local</codePool>
+			<depends>
+				<Mage_Payment />
+			</depends>
+			<version>0.1.0</version>
+		</Kompassi_CheckoutFinland>
+	</modules>
+</config>

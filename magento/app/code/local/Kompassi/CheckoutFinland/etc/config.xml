@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Kompassi_CheckoutFinland>
+			<version>0.1.0</version>
+		</Kompassi_CheckoutFinland>
+	</modules>
+	
+	<global>
+		<models>
+			<checkoutfinland>
+				<class>Kompassi_CheckoutFinland_Model</class>
+			</checkoutfinland>
+		</models>
+		
+		<helpers>
+			<checkoutfinland>
+				<class>Kompassi_CheckoutFinland_Helper</class>
+			</checkoutfinland>
+		</helpers>
+		
+		<resources>
+			<checkoutfinland_setup>
+				<setup>
+					<module>Kompassi_CheckoutFinland</module>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</checkoutfinland_setup>
+			
+			<checkoutfinland_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</checkoutfinland_write>
+			
+			<checkoutfinland_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</checkoutfinland_read>
+		</resources>
+		
+		<blocks>
+			<checkoutfinland>
+				<class>Kompassi_CheckoutFinland_Block</class>
+			</checkoutfinland>
+		</blocks>
+		
+	</global>
+	
+	<frontend>
+	
+		<secure_url>
+	        <checkoutfinland>/checkoutfinland/standard</checkoutfinland>
+	    </secure_url>
+	
+		<routers>
+	        <checkoutfinland>
+	            <use>standard</use>
+	            <args>
+	                <module>Kompassi_CheckoutFinland</module>
+	                <frontName>checkoutfinland</frontName>
+	            </args>
+	        </checkoutfinland>
+        </routers>
+        
+     	<layout>
+	        <updates>
+	             <checkoutfinland_redirect>
+	                   <file>checkoutfinland.xml</file>
+	             </checkoutfinland_redirect>
+	        </updates>
+	    </layout>
+	    
+	    <translate>
+            <modules>
+                <Kompassi_CheckoutFinland>
+                    <files>
+                        <default>Kompassi_CheckoutFinland.csv</default>
+                    </files>
+                </Kompassi_CheckoutFinland>
+            </modules>
+        </translate>
+
+	</frontend>
+	
+	<adminhtml>
+		<translate>
+            <modules>
+                <Kompassi_CheckoutFinland>
+                    <files>
+                        <default>Kompassi_CheckoutFinland.csv</default>
+                    </files>
+                </Kompassi_CheckoutFinland>
+            </modules>
+        </translate>
+	</adminhtml>
+	
+	<default>
+		<payment>
+			<checkoutfinland>
+				<active>0</active>
+				<model>Kompassi_CheckoutFinland_Model_Standard</model>
+
+				<title>Checkout Finland</title>
+                <merchant_id>375917</merchant_id>
+				<merchant_secret>SAIPPUAKAUPPIAS</merchant_secret>
+				<delivery_time>14</delivery_time>
+				<payment_action>authorize_capture</payment_action>
+				<allow_payments_under_1_eur>false</allow_payments_under_1_eur>
+			</checkoutfinland>
+		</payment>
+	</default>
+</config>

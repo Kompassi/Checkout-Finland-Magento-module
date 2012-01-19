@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<config>
+	<sections>
+		<payment>
+			<groups>
+				<checkoutfinland translate="label" module="paygate">
+					<label>Checkout Finland payment module</label>
+					<sort_order>670</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>0</show_in_store>
+					
+					<fields>
+						<active translate="label">
+							<label>Enabled</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>10</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+						</active>
+						
+						<title translate="label">
+							<label>Title</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>20</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+						</title>
+       			
+						<merchant_id>
+							<label>Merchant ID</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>59</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+						</merchant_id>
+						
+						<merchant_secret translate="label">
+                            <label>Secret</label>
+                            <comment>Merchants secret key</comment>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </merchant_secret>
+                        
+                        <delivery_time translate="label">
+                        	<label>Delivery Time</label>
+                        	<sort_order>63</sort_order>
+                        	<show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </delivery_time>
+						
+						<allowspecific translate="label">
+							<label>Payment applicable from</label>
+							<frontend_type>select</frontend_type>
+							<sort_order>65</sort_order>
+							<source_model>adminhtml/system_config_source_payment_allspecificcountries</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+						</allowspecific>
+						
+						<specificcountry translate="label">
+							<label>Countries payment applicable from</label>
+							<frontend_type>multiselect</frontend_type>
+							<sort_order>70</sort_order>
+							<source_model>adminhtml/system_config_source_country</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+							<depends>
+								<allowspecific>1</allowspecific>
+							</depends>
+						</specificcountry>
+						
+                        
+                        <allow_payments_under_1_eur translate="label comment">
+                         	<label>Allow payments under 1 eur</label>
+                            <comment>Allow payments under the minimum amount</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>22</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allow_payments_under_1_eur>
+						
+						<sort_order translate="label">
+							<label>Sort Order</label>
+							<frontend_type>text</frontend_type>
+						</sort_order>
+						<sort_order>100</sort_order>
+						<show_in_default>1</show_in_default>
+						<show_in_website>1</show_in_website>
+						<show_in_store>0</show_in_store>
+						
+					</fields>
+				</checkoutfinland>
+			</groups>
+		</payment>
+	</sections>
+</config>
