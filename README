@@ -7,12 +7,14 @@ Asennus
 Kopio tiedostot ja laita moduli päälle Magento admin puolelta, testitunnukset
 ovat oletusasetuksina.
 
+Varmista että allow_url_fopen optio php.ini tiedostossa on sallittu.
+
 What's this then?
 
 This is a payment module for Magento ecommerce platform that uses a finnish 
 payment gateway called Checkout Finland. http://www.checkout.fi
 
-INSTALLATION
+Installation
 
 Installation is simple, just drop the magento folder to whatever directory 
 has your Magento installation and all the files should go the right places. 
@@ -21,3 +23,5 @@ from your Magentos admin panel like you would with anyother module.
 
 This module has the test merchant id and merchant secret as default values 
 in its configuration so you can test your Magento shop before launching.
+
+Make sure the allow_url_fopen option is set to On in your php.ini file.
