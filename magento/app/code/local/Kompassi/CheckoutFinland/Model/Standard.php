@@ -73,13 +73,13 @@ class Kompassi_CheckoutFinland_Model_Standard extends Mage_Payment_Model_Method_
         }
         
         $this->checkCurrencyCode();
-    	$merchant_id = Mage::getStoreConfig('payment/checkoutfinland/merchant_id');
-    	$merchant_secret = Mage::getStoreConfig('payment/checkoutfinland/merchant_secret');
-    	$delivery_time = Mage::getStoreConfig('payment/checkoutfinland/delivery_time');
+    	$merchant_id       = Mage::getStoreConfig('payment/checkoutfinland/merchant_id');
+    	$merchant_secret   = Mage::getStoreConfig('payment/checkoutfinland/merchant_secret');
+    	$delivery_time     = Mage::getStoreConfig('payment/checkoutfinland/delivery_time');
         
     	$data = $this->getPostData($merchant_id, $merchant_secret, $addr, $delivery_time);
     	$checkout_forms_xml = $this->doPost($data);
-		//Mage::log('checkoutfinland :' .$checkout_forms_xml);
+
     	return simplexml_load_string($checkout_forms_xml);
     }
     
@@ -111,9 +111,9 @@ class Kompassi_CheckoutFinland_Model_Standard extends Mage_Payment_Model_Method_
 		$post['POSTOFFICE']		= substr($addr->getCity(), 0, 18);
 		
 		$mac = "";
-		foreach($post as $value)
+		foreach($post as $value) {
 			$mac .= "$value+";
-			
+		}	
 		$mac .= $merchant_secret;
 		
 		$post['MAC'] = strtoupper(md5($mac));
@@ -121,19 +121,45 @@ class Kompassi_CheckoutFinland_Model_Standard extends Mage_Payment_Model_Method_
 		return $post;
     }
     
-    private function doPost($data)
+    private function doPost($postData)
     {
-    	$data = http_build_query($data);
 
-    	$context = stream_context_create(array(
-    		'http' => array(
-    			'method' => 'POST',
-    			'header' => 'Content-Type: application/x-www-form-urlencoded',
-    			'content' => $data
-    		)
-    	));
-    	
-    	return file_get_contents('https://payment.checkout.fi', false, $context);
+        if(ini_get('allow_url_fopen'))
+        {
+        	$context = stream_context_create(array(
+        		'http' => array(
+        			'method' => 'POST',
+        			'header' => 'Content-Type: application/x-www-form-urlencoded',
+        			'content' => http_build_query($postData)
+        		)
+        	));
+        	
+        	return file_get_contents('https://payment.checkout.fi', false, $context);
+        } 
+        elseif(in_array('curl', get_loaded_extensions()) ) 
+        {
+            $options = array(
+                CURLOPT_POST            => 1,
+                CURLOPT_HEADER          => 0,
+                CURLOPT_URL             => 'https://payment.checkout.fi',
+                CURLOPT_FRESH_CONNECT   => 1,
+                CURLOPT_RETURNTRANSFER  => 1,
+                CURLOPT_FORBID_REUSE    => 1,
+                CURLOPT_TIMEOUT         => 4,
+                CURLOPT_POSTFIELDS      => http_build_query($postData)
+            );
+        
+            $ch = curl_init();
+            curl_setopt_array($ch, $options);
+            $result = curl_exec($ch);
+            curl_close($ch);
+
+            return $result;
+        }
+        else 
+        {
+            throw new Exception("No valid method to post data. Set allow_url_fopen setting to On in php.ini file or install curl extension.");
+        }
     }
     
 	private function createReferenceNumber()
