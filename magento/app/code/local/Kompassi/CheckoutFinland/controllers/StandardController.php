@@ -18,6 +18,9 @@ class Kompassi_CheckoutFinland_StandardController extends Mage_Core_Controller_F
 		$order = Mage::getModel('sales/order');
     	$order->loadByIncrementId($session->getLastRealOrderId());
 		$standard->setOrder($order);
+
+        $order->setStatus(Mage_Sales_Model_Order::STATE_PENDING_PAYMENT);
+        $order->save();
 		
 		if(!$standard->getConfigData('allow_payments_under_1_eur'))
 		{
@@ -37,13 +40,13 @@ class Kompassi_CheckoutFinland_StandardController extends Mage_Core_Controller_F
     {
     	$merchant_secret = Mage::getStoreConfig('payment/checkoutfinland/merchant_secret');
 
-    	$version = $_GET['VERSION'];
-    	$stamp = $_GET['STAMP'];
+    	$version   = $_GET['VERSION'];
+    	$stamp     = $_GET['STAMP'];
     	$reference = $_GET['REFERENCE'];
-    	$payment = $_GET['PAYMENT'];
-    	$status = $_GET['STATUS'];
+    	$payment   = $_GET['PAYMENT'];
+    	$status    = $_GET['STATUS'];
     	$algorithm = $_GET['ALGORITHM'];
-    	$mac = $_GET['MAC'];
+    	$mac       = $_GET['MAC'];
     	
     	if($algorithm == 1)
     		$expected_mac = strtoupper(md5("$version+$stamp+$reference+$payment+$status+$algorithm+$merchant_secret"));
@@ -131,7 +134,7 @@ class Kompassi_CheckoutFinland_StandardController extends Mage_Core_Controller_F
     		
     	$standard->setOrder($order);
     	
-    	$order->setStatus(Mage_Sales_Model_Order::STATE_PROCESSING);
+    	$order->setStatus(Mage_Sales_Model_Order::STATE_PENDING);
     
         $order->addStatusToHistory($order->getStatus(), Mage::helper('checkoutfinland')->__('Payment completed') ." " .Mage::helper('checkoutfinland')->__('Checkout payment id')." " .$payment_id);
 
