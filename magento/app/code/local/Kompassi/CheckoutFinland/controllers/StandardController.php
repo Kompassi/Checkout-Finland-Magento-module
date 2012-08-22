@@ -61,7 +61,6 @@ class Kompassi_CheckoutFinland_StandardController extends Mage_Core_Controller_F
     			case '2':
     			case '5':
     			case '6':
-    			case '7':
     			case '8':
     			case '9':
     			case '10':
@@ -69,6 +68,7 @@ class Kompassi_CheckoutFinland_StandardController extends Mage_Core_Controller_F
     				break;
     			case '3':
     			case '4':
+                case '7':
     				$this->delayed($stamp, $reference, $payment);
     				break;
     			case '-1':
