@@ -134,7 +134,7 @@ class Kompassi_CheckoutFinland_StandardController extends Mage_Core_Controller_F
     		
     	$standard->setOrder($order);
     	
-    	$order->setStatus(Mage_Sales_Model_Order::STATE_PENDING);
+    	$order->setStatus(Mage_Sales_Model_Order::STATE_PROCESSING);
     
         $order->addStatusToHistory($order->getStatus(), Mage::helper('checkoutfinland')->__('Payment completed') ." " .Mage::helper('checkoutfinland')->__('Checkout payment id')." " .$payment_id);
 
