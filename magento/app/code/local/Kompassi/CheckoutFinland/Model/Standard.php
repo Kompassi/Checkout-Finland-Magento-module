@@ -156,9 +156,6 @@ class Kompassi_CheckoutFinland_Model_Standard extends Mage_Payment_Model_Method_
             $result = curl_exec($ch);
             curl_close($ch);
 
-            var_dump($result);
-            die();
-
             return $result;
         }
         else 
