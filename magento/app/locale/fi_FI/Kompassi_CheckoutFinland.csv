@@ -17,3 +17,5 @@
 "Payment delayed", "Maksu viivästetty"
 "Allow payments under 1 eur", "Salli alle 1 euron maksut"
 "Allow payments under the minimum amount", "Huom. Tämä optio sallii minimirajan alittavat maksusuoritukset, tätä ominaisuutta ei tule asettaa päälle ilman erillistä sopimusta."
+"Payment Action", "Maksutapahtuman toiminto"
+"Set to authorize only so that the invoices are not automatically set to paid", "Aseta Authorize Only, niin tilauksissa luotu lasku ei merkkaannu automaattisesti maksetuksi."

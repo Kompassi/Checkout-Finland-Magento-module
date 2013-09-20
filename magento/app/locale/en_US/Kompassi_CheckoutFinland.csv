@@ -17,3 +17,5 @@
 "Payment delayed", "Payment delayed"
 "Allow payments under 1 eur", "Allow payments under 1 eur"
 "Allow payments under the minimum amount", "Note that this option should not be enable unless you have a contract with Checkout Finland allowing payments that are under 1€."
+"Payment Action", "Payment Action"
+"Set to authorize only so that the invoices are not automatically set to paid", "Set to authorize only so that the invoices are not automatically set to paid"

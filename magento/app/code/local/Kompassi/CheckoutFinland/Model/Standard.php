@@ -3,13 +3,17 @@ class Kompassi_CheckoutFinland_Model_Standard extends Mage_Payment_Model_Method_
 {
 	protected $_isGateway = false;
 	protected $_canAuthorize = false;
-	protected $_canCapture = false;
-	protected $_canCapturePartial = false;
-	protected $_canRefund = false;
-	protected $_canVoid = false;
+	protected $_canCapture = true;
+	protected $_canCapturePartial = true;
+	protected $_canRefund = true;
+	protected $_canVoid = true;
 	protected $_canUseInternal = false;
 	protected $_canUseCheckout = true;
 	protected $_canUseForMultishipping = false;
+    protected $_canRefundInvoicePartial = true; // changed PJS to true 
+    protected $_canFetchTransactionInfo = true; // changed PJS to true 
+    protected $_canReviewPayment = true; // changed PJS to true 
+
 	
 	protected $_code  = 'checkoutfinland';
     protected $_formBlockType = 'checkoutfinland/standard_form';
@@ -66,11 +70,10 @@ class Kompassi_CheckoutFinland_Model_Standard extends Mage_Payment_Model_Method_
 
     public function getCheckoutForms()
     {
-   	 	if ($this->getQuote()->getIsVirtual()) {
+        $addr = $this->getOrder()->getShippingAddress();
+
+        if(!$addr)
             $addr = $this->getOrder()->getBillingAddress();
-        } else {
-            $addr = $this->getOrder()->getShippingAddress();
-        }
         
         $this->checkCurrencyCode();
     	$merchant_id       = Mage::getStoreConfig('payment/checkoutfinland/merchant_id');
@@ -85,7 +88,6 @@ class Kompassi_CheckoutFinland_Model_Standard extends Mage_Payment_Model_Method_
     
     private function getPostData($merchant_id, $merchant_secret, $addr, $delivery_time)
     {
-    	
 		$post['VERSION']		= "0001";
 		$post['STAMP']			= $this->getOrder()->getRealOrderId();
 		$post['AMOUNT']			= $this->getTotalAmount();
@@ -104,11 +106,11 @@ class Kompassi_CheckoutFinland_Model_Standard extends Mage_Payment_Model_Method_
 		$post['TYPE']			= "0";
 		$post['ALGORITHM']		= "2";
 		$post['DELIVERY_DATE']	= date('Ymd', strtotime("+$delivery_time days"));
-		$post['FIRSTNAME']		= substr($addr->getFirstname(), 0, 40);
-		$post['FAMILYNAME']		= substr($addr->getLastname(), 0, 40);
-		$post['ADDRESS']		= substr($addr->getStreet(1), 0, 40);
-		$post['POSTCODE']		= substr($addr->getPostcode(), 0, 5);
-		$post['POSTOFFICE']		= substr($addr->getCity(), 0, 18);
+		$post['FIRSTNAME']		= !$addr ? '' : substr($addr->getFirstname(), 0, 40);
+		$post['FAMILYNAME']		= !$addr ? '' :substr($addr->getLastname(), 0, 40);
+		$post['ADDRESS']		= !$addr ? '' :substr($addr->getStreet(1), 0, 40);
+		$post['POSTCODE']		= !$addr ? '' :substr($addr->getPostcode(), 0, 5);
+		$post['POSTOFFICE']		= !$addr ? '' :substr($addr->getCity(), 0, 18);
 		
 		$mac = "";
 		foreach($post as $value) {
@@ -153,6 +155,9 @@ class Kompassi_CheckoutFinland_Model_Standard extends Mage_Payment_Model_Method_
             curl_setopt_array($ch, $options);
             $result = curl_exec($ch);
             curl_close($ch);
+
+            var_dump($result);
+            die();
 
             return $result;
         }

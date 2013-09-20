@@ -102,6 +102,7 @@ class Kompassi_CheckoutFinland_StandardController extends Mage_Core_Controller_F
     	$order->setStatus(Mage_Sales_Model_Order::STATE_CANCELED);
     	
         $order->addStatusToHistory($order->getStatus(), Mage::helper('checkoutfinland')->__('Order canceled') ." " .Mage::helper('checkoutfinland')->__('Checkout payment id') ." " .$payment_id );
+        $order->cancel();
         $order->save();
         
         $this->_redirect('checkout/onepage/failure');
