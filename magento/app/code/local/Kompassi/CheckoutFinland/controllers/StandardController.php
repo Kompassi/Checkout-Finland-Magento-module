@@ -52,6 +52,8 @@ class Kompassi_CheckoutFinland_StandardController extends Mage_Core_Controller_F
     		$expected_mac = strtoupper(md5("$version+$stamp+$reference+$payment+$status+$algorithm+$merchant_secret"));
     	elseif($algorithm == 2)
     		$expected_mac = strtoupper(md5("$merchant_secret&$version&$stamp&$reference&$payment&$status&$algorithm"));
+        elseif($algorithm == 3)
+            $expected_mac = strtoupper(hash_hmac('sha256', "$version&$stamp&$reference&$payment&$status&$algorithm", $merchant_secret));
     	else throw new Exception('Unsuported algorithm: '.$algorithm);
     	
     	if($expected_mac == $mac)

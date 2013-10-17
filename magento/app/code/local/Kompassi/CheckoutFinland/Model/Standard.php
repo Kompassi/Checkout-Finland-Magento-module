@@ -104,7 +104,7 @@ class Kompassi_CheckoutFinland_Model_Standard extends Mage_Payment_Model_Method_
 		$post['DEVICE']			= "10";
 		$post['CONTENT']		= "1";
 		$post['TYPE']			= "0";
-		$post['ALGORITHM']		= "2";
+		$post['ALGORITHM']		= "3";
 		$post['DELIVERY_DATE']	= date('Ymd', strtotime("+$delivery_time days"));
 		$post['FIRSTNAME']		= !$addr ? '' : substr($addr->getFirstname(), 0, 40);
 		$post['FAMILYNAME']		= !$addr ? '' :substr($addr->getLastname(), 0, 40);
