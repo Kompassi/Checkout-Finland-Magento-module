@@ -131,19 +131,26 @@ class Kompassi_CheckoutFinland_StandardController extends Mage_Core_Controller_F
 			       ->addObject($invoice)
 			       ->addObject($invoice->getOrder())
 			       ->save();
-				       
-		    $invoice->sendEmail();
        	}
     		
     	$standard->setOrder($order);
     	
     	$order->setStatus(Mage_Sales_Model_Order::STATE_PROCESSING);
     
-        $order->addStatusToHistory($order->getStatus(), Mage::helper('checkoutfinland')->__('Payment completed') ." " .Mage::helper('checkoutfinland')->__('Checkout payment id')." " .$payment_id);
+        $newOrderStatus     = 'processing';
+        $paymentDescription = 'Payment method: Checkout Finland';
+        $notify             = 'false';
+        $order->setState(
+          Mage_Sales_Model_Order::STATE_PROCESSING, $newOrderStatus,
+          $paymentDescription,
+          $notify
+          );
 
     	try {
-    		$order->sendNewOrderEmail();
-        	$order->setEmailSent(true);
+    		if (!$order->getEmailSent()) {
+                $order->sendNewOrderEmail();
+                $order->setEmailSent(true);
+             }
            
     	} catch (Exception $ex) {}
         

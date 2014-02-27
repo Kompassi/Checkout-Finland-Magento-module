@@ -2,7 +2,7 @@
 class Kompassi_CheckoutFinland_Model_Standard extends Mage_Payment_Model_Method_Abstract
 {
 	protected $_isGateway = false;
-	protected $_canAuthorize = false;
+	protected $_canAuthorize = true;
 	protected $_canCapture = true;
 	protected $_canCapturePartial = true;
 	protected $_canRefund = true;
