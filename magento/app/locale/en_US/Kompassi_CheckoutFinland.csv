@@ -19,3 +19,5 @@
 "Allow payments under the minimum amount", "Note that this option should not be enable unless you have a contract with Checkout Finland allowing payments that are under 1€."
 "Payment Action", "Payment Action"
 "Set to authorize only so that the invoices are not automatically set to paid", "Set to authorize only so that the invoices are not automatically set to paid"
+"Use billing address for contact details", "Use billing address for contact details"
+"Yes, if you want the billing address used as delivery address in transaction details", "Yes, if you want the billing address used as delivery address in transaction details"

@@ -72,7 +72,7 @@ class Kompassi_CheckoutFinland_Model_Standard extends Mage_Payment_Model_Method_
     {
         $addr = $this->getOrder()->getShippingAddress();
 
-        if(!$addr)
+        if(!$addr or $this->getConfigData('use_billing_address_for_contact_details'))
             $addr = $this->getOrder()->getBillingAddress();
         
         $this->checkCurrencyCode();
