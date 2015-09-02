@@ -68,7 +68,9 @@ class Kompassi_CheckoutFinland_Block_Standard_Redirect extends Mage_Core_Block_A
 		{
 			foreach($bankX as $bank) 
 			{
-				$html .= "<div class='C1' style='float: left; margin-right: 20px; min-height: 100px;' text-align: center;><form action='{$bank['url']}' method='post'><p>\n";
+				$bankId = mb_strtolower($bank['name'], 'UTF-8');
+				$bankId = str_replace(array(" ", "-", ":", "ä", "ö", "å"), array("", "", "", "a", "o", "a"), $bankId);
+				$html .= "<div class='C1' style='float: left; margin-right: 20px; min-height: 100px;' text-align: center;><form id='bank-form-" . $bankId . "' action='{$bank['url']}' method='post'><p>\n";
 				foreach($bank as $key => $value) 
 				{
 					$html .= "<input type='hidden' name='$key' value='$value' />\n";
@@ -77,6 +79,19 @@ class Kompassi_CheckoutFinland_Block_Standard_Redirect extends Mage_Core_Block_A
 			}
 		}
 		$html .= '<div style="clear:both;"></div></div>';
+    
+		$html .= '<script type="text/javascript">
+		document.observe("dom:loaded", function() {
+			var preSelectedMethod = Mage.Cookies.get("checkoutfinland_method");
+			if(preSelectedMethod != "") {
+				var formName = "#bank-" + preSelectedMethod + " form";
+				if(!formName || !formName.length) { return; }
+				document.cookie = "checkoutfinland_method=; path=/";
+				$("bank-form-" + preSelectedMethod).submit();
+			}
+		});
+		</script>';
+    
 		return $html;
 	}
 }

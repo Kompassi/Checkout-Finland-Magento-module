@@ -9,6 +9,11 @@ ovat oletusasetuksina.
 
 Varmista että allow_url_fopen optio php.ini tiedostossa on sallittu.
 
+Checkout-lisäosa tukee maksutavan esivalintaa kassalla. Esivalinta välitetään lisäosalle checkoutfinland_method-piparissa. Magenton kassalinjan tehtävänä on asettaa pipari oikeaan arvoon. Checkout-lisäosa uudelleenohjaa käyttäjän piparin mukaiseen maksupalveluun.
+
+Tuetut maksutavan esivalinnat ovat:
+aktia, alandsbanken, danskebank, everydayjoustavamaksutapa, handelsbanken, lahitapiolapankki, mastercard, neocard, nordea, osuuspankki, poppankki, saastopankki, tilisiirto, visa, visaelectron
+
 What's this then?
 
 This is a payment module for Magento ecommerce platform that uses a finnish 
